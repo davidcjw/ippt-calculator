@@ -58,8 +58,8 @@ export default function Home() {
   const runMax = Math.max(...Object.keys((gender === "male" ? maleRun24ScoreLookup : femaleRun24ScoreLookup)[ageGroup]).map(Number));
   const pushMin = Math.min(...Object.keys((gender === "male" ? malePushUpScoreLookup : femalePushUpScoreLookup)[ageGroup]).map(Number));
   const pushMax = Math.max(...Object.keys((gender === "male" ? malePushUpScoreLookup : femalePushUpScoreLookup)[ageGroup]).map(Number));
-  const sitMin = Math.min(...Object.keys(gender === "male" ? maleSitUpScoreLookup : femaleSitUpScoreLookup).map(Number));
-  const sitMax = Math.max(...Object.keys(gender === "male" ? maleSitUpScoreLookup : femaleSitUpScoreLookup).map(Number));
+  const sitMin = Math.min(...Object.keys((gender === "male" ? maleSitUpScoreLookup : femaleSitUpScoreLookup)[ageGroup]).map(Number));
+  const sitMax = Math.max(...Object.keys((gender === "male" ? maleSitUpScoreLookup : femaleSitUpScoreLookup)[ageGroup]).map(Number));
 
   // Helper to format seconds as mm:ss
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
@@ -79,7 +79,7 @@ export default function Home() {
 
   // Helper to find reps to next point for sit-ups
   const getNextSitUpReps = (() => {
-    const table = gender === "male" ? maleSitUpScoreLookup : femaleSitUpScoreLookup;
+    const table = (gender === "male" ? maleSitUpScoreLookup : femaleSitUpScoreLookup)[ageGroup];
     if (!table) return null;
     const currentScore = table[sitUps] ?? 0;
     let reps = sitUps + 1;
