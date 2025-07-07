@@ -128,15 +128,20 @@ export default function Home() {
           </Tooltip>
         </Flex>
         <VStack spacing={8} align="stretch">
-          {/* Gender Selection */}
-          <GenderSelector gender={gender} setGender={setGender} />
-          {/* Age Group Selection */}
-          <AgeGroupSelector
-            ageBuckets={ageBuckets}
-            ageGroup={ageGroup}
-            setAgeGroup={setAgeGroup}
-            getAgeLabel={getAgeLabel}
-          />
+          {/* Gender and Age Group Selection on the same row */}
+          <Flex direction="row" gap={4} align="flex-end">
+            <Box flex={2} minW={0}>
+              <GenderSelector gender={gender} setGender={setGender} />
+            </Box>
+            <Box flex={1} minW={0}>
+              <AgeGroupSelector
+                ageBuckets={ageBuckets}
+                ageGroup={ageGroup}
+                setAgeGroup={setAgeGroup}
+                getAgeLabel={getAgeLabel}
+              />
+            </Box>
+          </Flex>
           {/* Run Slider */}
           <RunSlider
             run={run}

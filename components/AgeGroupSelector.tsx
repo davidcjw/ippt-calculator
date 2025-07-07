@@ -1,4 +1,4 @@
-import { HStack, Select, Badge, Text } from "@chakra-ui/react";
+import { HStack, Select, Text } from "@chakra-ui/react";
 import React from "react";
 
 interface AgeGroupSelectorProps {
@@ -26,9 +26,6 @@ const AgeGroupSelector: React.FC<AgeGroupSelectorProps> = ({ ageBuckets, ageGrou
                     </option>
                 ))}
             </Select>
-            <Badge colorScheme="purple" fontSize="md">
-                {getAgeLabel(ageGroup, ageBuckets.indexOf(ageGroup), ageBuckets)} yrs
-            </Badge>
         </HStack>
     </div>
 );
