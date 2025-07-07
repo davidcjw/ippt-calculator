@@ -12,7 +12,7 @@ import {
   useColorMode,
   Box
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AgeGroupSelector from "@/components/AgeGroupSelector";
 import GenderSelector from "@/components/GenderSelector";
 import PushUpSlider from "@/components/PushUpSlider";
@@ -24,6 +24,7 @@ import { femaleRun24ScoreLookup, maleRun24ScoreLookup } from "@/lib/run24ScoreLo
 import { maleSitUpScoreLookup, femaleSitUpScoreLookup } from "@/lib/sitUpScoreLookup";
 import { getReward } from "@/lib/utils";
 import WorkoutDrawer from "../components/WorkoutDrawer";
+import { FaGithub } from "react-icons/fa";
 
 const ageBuckets = Object.keys(malePushUpScoreLookup).map(Number);
 
@@ -40,6 +41,43 @@ export default function Home() {
   const [pushUps, setPushUps] = useState<number>(25);
   const [sitUps, setSitUps] = useState<number>(25);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  // Load gender, ageGroup, run, pushUps, sitUps from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedGender = localStorage.getItem("ippt_gender");
+      const storedAgeGroup = localStorage.getItem("ippt_ageGroup");
+      const storedRun = localStorage.getItem("ippt_run");
+      const storedPushUps = localStorage.getItem("ippt_pushUps");
+      const storedSitUps = localStorage.getItem("ippt_sitUps");
+      if (storedGender === "male" || storedGender === "female") {
+        setGender(storedGender);
+      }
+      if (storedAgeGroup && !isNaN(Number(storedAgeGroup))) {
+        setAgeGroup(Number(storedAgeGroup));
+      }
+      if (storedRun && !isNaN(Number(storedRun))) {
+        setRun(Number(storedRun));
+      }
+      if (storedPushUps && !isNaN(Number(storedPushUps))) {
+        setPushUps(Number(storedPushUps));
+      }
+      if (storedSitUps && !isNaN(Number(storedSitUps))) {
+        setSitUps(Number(storedSitUps));
+      }
+    }
+  }, []);
+
+  // Save gender, ageGroup, run, pushUps, sitUps to localStorage when they change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("ippt_gender", gender);
+      localStorage.setItem("ippt_ageGroup", String(ageGroup));
+      localStorage.setItem("ippt_run", String(run));
+      localStorage.setItem("ippt_pushUps", String(pushUps));
+      localStorage.setItem("ippt_sitUps", String(sitUps));
+    }
+  }, [gender, ageGroup, run, pushUps, sitUps]);
 
   // Lookup helpers
   const pushUpScore = (gender === "male"
@@ -116,16 +154,29 @@ export default function Home() {
             </Heading>
           </Box>
           <Spacer />
-          <Tooltip label={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}>
-            <IconButton
-              aria-label="Toggle color mode"
-              icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-              onClick={toggleColorMode}
-              variant="ghost"
-              size="lg"
-              ml={2}
-            />
-          </Tooltip>
+          <VStack spacing={0} align="end">
+            <Tooltip label={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}>
+              <IconButton
+                aria-label="Toggle color mode"
+                icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                onClick={toggleColorMode}
+                variant="ghost"
+                size="md"
+              />
+            </Tooltip>
+            <Tooltip label="Star on GitHub">
+              <IconButton
+                as="a"
+                href="https://github.com/davidcjw/ippt-calculator"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Star on GitHub"
+                icon={<FaGithub />}
+                variant="ghost"
+                size="md"
+              />
+            </Tooltip>
+          </VStack>
         </Flex>
         <VStack spacing={8} align="stretch">
           {/* Gender and Age Group Selection on the same row */}
