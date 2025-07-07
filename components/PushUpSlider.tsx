@@ -27,16 +27,16 @@ const PushUpSlider: React.FC<PushUpSliderProps> = ({ pushUps, setPushUps, pushMi
             <Text fontWeight="bold" fontSize="lg">
                 Push-Ups
                 {getNextPointReps !== undefined && getNextPointReps !== null && getNextPointReps > 0 && (
-                    <Text as="span" fontSize="sm" color="gray.500" ml={2}>
+                    <Text as="span" fontSize="2xs" color="gray.500" ml={2}>
                         +{getNextPointReps} reps to next point
                     </Text>
                 )}
             </Text>
             <Spacer />
-            <Tag colorScheme="orange" fontSize="md">
+            <Tag colorScheme="orange" fontSize="xs">
                 {pushUps} reps
             </Tag>
-            <Tag colorScheme="blue" fontSize="md" ml={2}>
+            <Tag colorScheme="blue" fontSize="xs" ml={2}>
                 {pushUpScore} pts
             </Tag>
         </Flex>
@@ -53,10 +53,10 @@ const PushUpSlider: React.FC<PushUpSliderProps> = ({ pushUps, setPushUps, pushMi
                 <SliderFilledTrack />
             </SliderTrack>
             <SliderThumb />
-            <SliderMark value={pushMin} mt={2} ml={-2} fontSize="sm">
+            <SliderMark value={pushMin} mt={2} ml={-2} fontSize="xs">
                 {pushMin}
             </SliderMark>
-            <SliderMark value={pushMax} mt={2} ml={-2} fontSize="sm">
+            <SliderMark value={pushMax} mt={2} ml={-2} fontSize="xs">
                 {pushMax}
             </SliderMark>
         </Slider>

@@ -27,16 +27,16 @@ const SitUpSlider: React.FC<SitUpSliderProps> = ({ sitUps, setSitUps, sitMin, si
             <Text fontWeight="bold" fontSize="lg">
                 Sit-Ups
                 {getNextPointReps !== undefined && getNextPointReps !== null && getNextPointReps > 0 && (
-                    <Text as="span" fontSize="sm" color="gray.500" ml={2}>
+                    <Text as="span" fontSize="2xs" color="gray.500" ml={2}>
                         +{getNextPointReps} reps to next point
                     </Text>
                 )}
             </Text>
             <Spacer />
-            <Tag colorScheme="green" fontSize="md">
+            <Tag colorScheme="green" fontSize="xs">
                 {sitUps} reps
             </Tag>
-            <Tag colorScheme="blue" fontSize="md" ml={2}>
+            <Tag colorScheme="blue" fontSize="xs" ml={2}>
                 {sitUpScore} pts
             </Tag>
         </Flex>
@@ -53,10 +53,10 @@ const SitUpSlider: React.FC<SitUpSliderProps> = ({ sitUps, setSitUps, sitMin, si
                 <SliderFilledTrack />
             </SliderTrack>
             <SliderThumb />
-            <SliderMark value={sitMin} mt={2} ml={-2} fontSize="sm">
+            <SliderMark value={sitMin} mt={2} ml={-2} fontSize="xs">
                 {sitMin}
             </SliderMark>
-            <SliderMark value={sitMax} mt={2} ml={-2} fontSize="sm">
+            <SliderMark value={sitMax} mt={2} ml={-2} fontSize="xs">
                 {sitMax}
             </SliderMark>
         </Slider>

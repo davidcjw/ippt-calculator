@@ -28,16 +28,16 @@ const RunSlider: React.FC<RunSliderProps> = ({ run, setRun, runMin, runMax, runS
             <Text fontWeight="bold" fontSize="lg">
                 2.4km Run
                 {getNextPointSecs !== undefined && getNextPointSecs !== null && getNextPointSecs > 0 && (
-                    <Text as="span" fontSize="sm" color="gray.500" ml={2}>
+                    <Text as="span" fontSize="2xs" color="gray.500" ml={2}>
                         -{getNextPointSecs}s to next point
                     </Text>
                 )}
             </Text>
             <Spacer />
-            <Tag colorScheme="teal" fontSize="md">
+            <Tag colorScheme="teal" fontSize="xs">
                 {formatTime(run)}
             </Tag>
-            <Tag colorScheme="blue" fontSize="md" ml={2}>
+            <Tag colorScheme="blue" fontSize="xs" ml={2}>
                 {runScore} pts
             </Tag>
         </Flex>
@@ -54,10 +54,10 @@ const RunSlider: React.FC<RunSliderProps> = ({ run, setRun, runMin, runMax, runS
                 <SliderFilledTrack />
             </SliderTrack>
             <SliderThumb />
-            <SliderMark value={runMin} mt={2} ml={-2} fontSize="sm">
+            <SliderMark value={runMin} mt={2} ml={-2} fontSize="xs">
                 {formatTime(runMin)}
             </SliderMark>
-            <SliderMark value={runMax} mt={2} ml={-6} fontSize="sm">
+            <SliderMark value={runMax} mt={2} ml={-6} fontSize="xs">
                 {formatTime(runMax)}
             </SliderMark>
         </Slider>

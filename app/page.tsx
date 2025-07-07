@@ -3,7 +3,6 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Container,
-  Divider,
   Flex,
   Heading,
   IconButton,
@@ -136,7 +135,6 @@ export default function Home() {
           setAgeGroup={setAgeGroup}
           getAgeLabel={getAgeLabel}
         />
-        <Divider />
         {/* Run Slider */}
         <RunSlider
           run={run}
