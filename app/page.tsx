@@ -23,6 +23,7 @@ import { femalePushUpScoreLookup, malePushUpScoreLookup } from "@/lib/pushUpScor
 import { femaleRun24ScoreLookup, maleRun24ScoreLookup } from "@/lib/run24ScoreLookup";
 import { maleSitUpScoreLookup, femaleSitUpScoreLookup } from "@/lib/sitUpScoreLookup";
 import { getReward } from "@/lib/utils";
+import WorkoutDrawer from "../components/WorkoutDrawer";
 
 const ageBuckets = Object.keys(malePushUpScoreLookup).map(Number);
 
@@ -103,75 +104,78 @@ export default function Home() {
   })();
 
   return (
-    <Container maxW="lg" py={10}>
-      <Flex align="center" mb={8}>
-        <Box>
-          <Heading size="lg" letterSpacing="tight" fontFamily="var(--font-ubuntu-sans)">
-            IPPT Score Calculator
-          </Heading>
-          <Heading size="xs" color="gray.500" fontWeight="normal" mt={2} fontFamily="var(--font-ubuntu-sans)">
-            The most modern IPPT calculator in 2025
-          </Heading>
-        </Box>
-        <Spacer />
-        <Tooltip label={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}>
-          <IconButton
-            aria-label="Toggle color mode"
-            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-            onClick={toggleColorMode}
-            variant="ghost"
-            size="lg"
-            ml={2}
+    <>
+      <Container maxW="lg" py={10}>
+        <Flex align="center" mb={8}>
+          <Box>
+            <Heading size="lg" letterSpacing="tight" fontFamily="var(--font-ubuntu-sans)">
+              IPPT Score Calculator
+            </Heading>
+            <Heading size="xs" color="gray.500" fontWeight="normal" mt={2} fontFamily="var(--font-ubuntu-sans)">
+              The most modern IPPT calculator in 2025
+            </Heading>
+          </Box>
+          <Spacer />
+          <Tooltip label={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}>
+            <IconButton
+              aria-label="Toggle color mode"
+              icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              onClick={toggleColorMode}
+              variant="ghost"
+              size="lg"
+              ml={2}
+            />
+          </Tooltip>
+        </Flex>
+        <VStack spacing={8} align="stretch">
+          {/* Gender Selection */}
+          <GenderSelector gender={gender} setGender={setGender} />
+          {/* Age Group Selection */}
+          <AgeGroupSelector
+            ageBuckets={ageBuckets}
+            ageGroup={ageGroup}
+            setAgeGroup={setAgeGroup}
+            getAgeLabel={getAgeLabel}
           />
-        </Tooltip>
-      </Flex>
-      <VStack spacing={8} align="stretch">
-        {/* Gender Selection */}
-        <GenderSelector gender={gender} setGender={setGender} />
-        {/* Age Group Selection */}
-        <AgeGroupSelector
-          ageBuckets={ageBuckets}
-          ageGroup={ageGroup}
-          setAgeGroup={setAgeGroup}
-          getAgeLabel={getAgeLabel}
-        />
-        {/* Run Slider */}
-        <RunSlider
-          run={run}
-          setRun={setRun}
-          runMin={runMin}
-          runMax={runMax}
-          runScore={runScore}
-          formatTime={formatTime}
-          getNextPointSecs={getNextRunSecs}
-        />
-        {/* Push Ups Slider */}
-        <PushUpSlider
-          pushUps={pushUps}
-          setPushUps={setPushUps}
-          pushMin={pushMin}
-          pushMax={pushMax}
-          pushUpScore={pushUpScore}
-          getNextPointReps={getNextPushUpReps}
-        />
-        {/* Sit Ups Slider */}
-        <SitUpSlider
-          sitUps={sitUps}
-          setSitUps={setSitUps}
-          sitMin={sitMin}
-          sitMax={sitMax}
-          sitUpScore={sitUpScore}
-          getNextPointReps={getNextSitUpReps}
-        />
-        {/* Score Tally */}
-        <ScoreTally
-          total={total}
-          runScore={runScore}
-          pushUpScore={pushUpScore}
-          sitUpScore={sitUpScore}
-          reward={getReward(total)}
-        />
-      </VStack>
-    </Container>
+          {/* Run Slider */}
+          <RunSlider
+            run={run}
+            setRun={setRun}
+            runMin={runMin}
+            runMax={runMax}
+            runScore={runScore}
+            formatTime={formatTime}
+            getNextPointSecs={getNextRunSecs}
+          />
+          {/* Push Ups Slider */}
+          <PushUpSlider
+            pushUps={pushUps}
+            setPushUps={setPushUps}
+            pushMin={pushMin}
+            pushMax={pushMax}
+            pushUpScore={pushUpScore}
+            getNextPointReps={getNextPushUpReps}
+          />
+          {/* Sit Ups Slider */}
+          <SitUpSlider
+            sitUps={sitUps}
+            setSitUps={setSitUps}
+            sitMin={sitMin}
+            sitMax={sitMax}
+            sitUpScore={sitUpScore}
+            getNextPointReps={getNextSitUpReps}
+          />
+          {/* Score Tally */}
+          <ScoreTally
+            total={total}
+            runScore={runScore}
+            pushUpScore={pushUpScore}
+            sitUpScore={sitUpScore}
+            reward={getReward(total)}
+          />
+        </VStack>
+      </Container>
+      <WorkoutDrawer gender={gender} ageGroup={ageGroup} />
+    </>
   );
 }
