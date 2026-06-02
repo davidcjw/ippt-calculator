@@ -28,11 +28,6 @@ import { maleSitUpScoreLookup, femaleSitUpScoreLookup } from "@/lib/sitUpScoreLo
 import { getReward } from "@/lib/utils";
 import { MdDirectionsRun } from "react-icons/md";
 
-interface WorkoutDrawerProps {
-    gender: "male" | "female";
-    ageGroup: number;
-}
-
 // Type for a saved workout
 export type SavedWorkout = {
     date: string;
@@ -45,7 +40,15 @@ export type SavedWorkout = {
     ageGroup: number;
 };
 
-const WorkoutDrawer: React.FC<WorkoutDrawerProps> = ({ gender, ageGroup }) => {
+interface WorkoutDrawerProps {
+    gender: "male" | "female";
+    ageGroup: number;
+    savedWorkouts: SavedWorkout[];
+    onSaveWorkout: (workout: SavedWorkout) => void;
+    onDeleteWorkout: (idx: number) => void;
+}
+
+const WorkoutDrawer: React.FC<WorkoutDrawerProps> = ({ gender, ageGroup, savedWorkouts, onSaveWorkout, onDeleteWorkout }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
 
@@ -58,22 +61,8 @@ const WorkoutDrawer: React.FC<WorkoutDrawerProps> = ({ gender, ageGroup }) => {
     const [pushUps, setPushUps] = useState(0);
     const [sitUps, setSitUps] = useState(0);
 
-    // State for saved workouts
-    const [savedWorkouts, setSavedWorkouts] = useState<SavedWorkout[]>([]);
-
     // State for button hover
     const [isButtonHovered, setIsButtonHovered] = useState(false);
-
-    // Load workouts from localStorage on mount
-    React.useEffect(() => {
-        const data = localStorage.getItem("ippt_workouts");
-        if (data) setSavedWorkouts(JSON.parse(data) as SavedWorkout[]);
-    }, []);
-
-    // Save workouts to localStorage whenever they change
-    React.useEffect(() => {
-        localStorage.setItem("ippt_workouts", JSON.stringify(savedWorkouts));
-    }, [savedWorkouts]);
 
     // Convert minutes and seconds to total seconds, rounded down to nearest 10s for scoring
     const runSecsRaw = runMinutes * 60 + runSeconds;
@@ -112,29 +101,21 @@ const WorkoutDrawer: React.FC<WorkoutDrawerProps> = ({ gender, ageGroup }) => {
             return;
         }
         const now = new Date();
-        setSavedWorkouts([
-            {
-                date: now.toISOString(),
-                runTime: `${runMinutes}:${runSeconds.toString().padStart(2, "0")}`,
-                pushUps,
-                sitUps,
-                total,
-                reward,
-                gender,
-                ageGroup,
-            },
-            ...savedWorkouts,
-        ]);
+        onSaveWorkout({
+            date: now.toISOString(),
+            runTime: `${runMinutes}:${runSeconds.toString().padStart(2, "0")}`,
+            pushUps,
+            sitUps,
+            total,
+            reward,
+            gender,
+            ageGroup,
+        });
         setShowForm(false);
         setRunMinutes(0);
         setRunSeconds(0);
         setPushUps(0);
         setSitUps(0);
-    };
-
-    // Delete a workout
-    const handleDelete = (idx: number) => {
-        setSavedWorkouts(savedWorkouts.filter((_, i) => i !== idx));
     };
 
     // Format date
@@ -266,7 +247,7 @@ const WorkoutDrawer: React.FC<WorkoutDrawerProps> = ({ gender, ageGroup }) => {
                                                         icon={<DeleteIcon />}
                                                         size="sm"
                                                         colorScheme="red"
-                                                        onClick={() => handleDelete(idx)}
+                                                        onClick={() => onDeleteWorkout(idx)}
                                                     />
                                                 </HStack>
                                             </Box>

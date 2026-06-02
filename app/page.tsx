@@ -1,6 +1,6 @@
 "use client";
 
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon, CheckIcon } from "@chakra-ui/icons";
 import {
   Container,
   Flex,
@@ -10,7 +10,9 @@ import {
   Tooltip,
   VStack,
   useColorMode,
-  Box
+  Box,
+  Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import AgeGroupSelector from "@/components/AgeGroupSelector";
@@ -23,7 +25,7 @@ import { femalePushUpScoreLookup, malePushUpScoreLookup } from "@/lib/pushUpScor
 import { femaleRun24ScoreLookup, maleRun24ScoreLookup } from "@/lib/run24ScoreLookup";
 import { maleSitUpScoreLookup, femaleSitUpScoreLookup } from "@/lib/sitUpScoreLookup";
 import { getReward } from "@/lib/utils";
-import WorkoutDrawer from "../components/WorkoutDrawer";
+import WorkoutDrawer, { SavedWorkout } from "../components/WorkoutDrawer";
 import { FaGithub } from "react-icons/fa";
 
 const ageBuckets = Object.keys(malePushUpScoreLookup).map(Number);
@@ -40,7 +42,9 @@ export default function Home() {
   const [run, setRun] = useState<number>(720); // seconds
   const [pushUps, setPushUps] = useState<number>(25);
   const [sitUps, setSitUps] = useState<number>(25);
+  const [savedWorkouts, setSavedWorkouts] = useState<SavedWorkout[]>([]);
   const { colorMode, toggleColorMode } = useColorMode();
+  const toast = useToast();
 
   // Load gender, ageGroup, run, pushUps, sitUps from localStorage on mount
   useEffect(() => {
@@ -79,6 +83,29 @@ export default function Home() {
     }
   }, [gender, ageGroup, run, pushUps, sitUps]);
 
+  // Load workout history from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("ippt_workouts");
+      if (data) setSavedWorkouts(JSON.parse(data) as SavedWorkout[]);
+    }
+  }, []);
+
+  // Persist workout history to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("ippt_workouts", JSON.stringify(savedWorkouts));
+    }
+  }, [savedWorkouts]);
+
+  const handleSaveWorkout = (workout: SavedWorkout) => {
+    setSavedWorkouts(prev => [workout, ...prev]);
+  };
+
+  const handleDeleteWorkout = (idx: number) => {
+    setSavedWorkouts(prev => prev.filter((_, i) => i !== idx));
+  };
+
   // Lookup helpers
   const pushUpScore = (gender === "male"
     ? malePushUpScoreLookup
@@ -101,6 +128,26 @@ export default function Home() {
 
   // Helper to format seconds as mm:ss
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
+
+  const handleDirectSave = () => {
+    handleSaveWorkout({
+      date: new Date().toISOString(),
+      runTime: formatTime(run),
+      pushUps,
+      sitUps,
+      total,
+      reward: getReward(total),
+      gender,
+      ageGroup,
+    });
+    toast({
+      title: "Workout saved!",
+      description: `${total} pts — ${getReward(total)}`,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
 
   // Helper to find reps to next point for push-ups
   const getNextPushUpReps = (() => {
@@ -229,9 +276,24 @@ export default function Home() {
             sitUpScore={sitUpScore}
             reward={getReward(total)}
           />
+          <Button
+            leftIcon={<CheckIcon />}
+            colorScheme="teal"
+            variant="outline"
+            w="full"
+            onClick={handleDirectSave}
+          >
+            Save Workout
+          </Button>
         </VStack>
       </Container>
-      <WorkoutDrawer gender={gender} ageGroup={ageGroup} />
+      <WorkoutDrawer
+        gender={gender}
+        ageGroup={ageGroup}
+        savedWorkouts={savedWorkouts}
+        onSaveWorkout={handleSaveWorkout}
+        onDeleteWorkout={handleDeleteWorkout}
+      />
     </>
   );
 }
