@@ -1,10 +1,24 @@
 # [IPPT Calculator](https://ippt.davidcjw.com)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![AgentReady Score](https://agentready.davidcjw.com/api/badge/davidcjw/ippt-calculator)](https://agentready.davidcjw.com/results/davidcjw/ippt-calculator)
+
 <p align="center">
   <img src="/public/ippt-calculator.gif" alt="Credit Card Manager Demo" width="700" />
 </p>
 
 A modern web app to calculate your Individual Physical Proficiency Test (IPPT) score for Singapore Armed Forces (SAF), Home Team, and related organizations.
+
+## Installation
+
+```bash
+git clone https://github.com/davidcjw/ippt-calculator.git
+cd ippt-calculator
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## What is IPPT?
 
@@ -44,6 +58,26 @@ You can now track your IPPT workouts directly in the app using a floating drawer
 - LocalStorage-based persistence (no account required).
 - Delete individual workouts as needed.
 
-## Contributions Are Welcome
+## Contributing
 
-For any bug reports or feature requests, please open them [here](https://github.com/davidcjw/ippt-calculator/issues). Otherwise, feel free to open pull requests.
+Contributions are welcome! Please open an issue first to discuss what you'd like to change.
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'feat: describe change'`)
+4. Push and open a pull request
+
+For bug reports or feature requests, please open them [here](https://github.com/davidcjw/ippt-calculator/issues).
+
+Please run `npm run lint` before submitting a PR.
+
+## Code of Conduct
+
+This project follows the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+By participating you agree to uphold a welcoming, harassment-free environment.
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+
+> **Note:** A `LICENSE` file has not yet been added to this repository. To complete the open-source setup, create one at the repo root (e.g. using the [MIT License text](https://opensource.org/licenses/MIT)).
