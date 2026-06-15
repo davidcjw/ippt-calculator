@@ -4,7 +4,7 @@
 [![AgentReady Score](https://agentready.davidcjw.com/api/badge/davidcjw/ippt-calculator)](https://agentready.davidcjw.com/results/davidcjw/ippt-calculator)
 
 <p align="center">
-  <img src="/public/ippt-calculator.gif" alt="Credit Card Manager Demo" width="700" />
+  <img src="public/ippt-calculator.gif" alt="IPPT Calculator demo — adjusting sliders to compute SAF IPPT score" width="700" />
 </p>
 
 A modern web app to calculate your Individual Physical Proficiency Test (IPPT) score for Singapore Armed Forces (SAF), Home Team, and related organizations.
@@ -79,5 +79,3 @@ By participating you agree to uphold a welcoming, harassment-free environment.
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for details.
-
-> **Note:** A `LICENSE` file has not yet been added to this repository. To complete the open-source setup, create one at the repo root (e.g. using the [MIT License text](https://opensource.org/licenses/MIT)).
