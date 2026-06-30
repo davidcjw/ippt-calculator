@@ -1,5 +1,7 @@
 # [IPPT Calculator](https://ippt.davidcjw.com)
 
+[![CI](https://github.com/davidcjw/ippt-calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/davidcjw/ippt-calculator/actions/workflows/ci.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![AgentReady Score](https://agentready.davidcjw.com/api/badge/davidcjw/ippt-calculator)](https://agentready.davidcjw.com/results/davidcjw/ippt-calculator)
 
