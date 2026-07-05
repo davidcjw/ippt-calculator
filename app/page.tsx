@@ -24,6 +24,7 @@ import SitUpSlider from "@/components/SitUpSlider";
 import { femalePushUpScoreLookup, malePushUpScoreLookup } from "@/lib/pushUpScoreLookup";
 import { femaleRun24ScoreLookup, maleRun24ScoreLookup } from "@/lib/run24ScoreLookup";
 import { maleSitUpScoreLookup, femaleSitUpScoreLookup } from "@/lib/sitUpScoreLookup";
+import { computeIpptScore } from "@/lib/score";
 import { getReward } from "@/lib/utils";
 import WorkoutDrawer, { SavedWorkout } from "../components/WorkoutDrawer";
 import { FaGithub } from "react-icons/fa";
@@ -107,16 +108,11 @@ export default function Home() {
   };
 
   // Lookup helpers
-  const pushUpScore = (gender === "male"
-    ? malePushUpScoreLookup
-    : femalePushUpScoreLookup)[ageGroup]?.[pushUps] ?? 0;
-  const sitUpScore = (gender === "male"
-    ? maleSitUpScoreLookup
-    : femaleSitUpScoreLookup)[ageGroup]?.[sitUps] ?? 0;
-  const runScore = (gender === "male"
-    ? maleRun24ScoreLookup
-    : femaleRun24ScoreLookup)[ageGroup]?.[run] ?? 0;
-  const total = pushUpScore + sitUpScore + runScore;
+  const { pushUpScore, sitUpScore, runScore, total } = computeIpptScore(gender, ageGroup, {
+    pushUps,
+    sitUps,
+    run,
+  });
 
   // For slider marks
   const runMin = Math.min(...Object.keys((gender === "male" ? maleRun24ScoreLookup : femaleRun24ScoreLookup)[ageGroup]).map(Number));
